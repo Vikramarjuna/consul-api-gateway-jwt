@@ -1,0 +1,1 @@
+# consul-api-gateway-jwt
