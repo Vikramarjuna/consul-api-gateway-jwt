@@ -9,6 +9,7 @@ aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terr
 kubectl create namespace consul
 
 # Setup Consul License
+create a license file with name `consul.hclic` in the root of this repositoryg
 secret=$(cat consul.hclic)
 kubectl create secret generic consul-ent-license --from-literal="key=${secret}"
 
