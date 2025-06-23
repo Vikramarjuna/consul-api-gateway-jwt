@@ -1,0 +1,39 @@
+global:
+  enabled: true
+  name: consul
+  datacenter: dc1
+  image: "hashicorp/consul-enterprise:1.20-ent"
+  acls:
+    manageSystemACLs: true
+  tls:
+    enabled: true
+    enableAutoEncrypt: true
+    verify: true
+  enterpriseLicense:
+    secretName: 'consul-ent-license'
+    secretKey: 'key'
+    # Name of the secret containing the license key
+
+server:
+  enabled: true
+  replicas: 3
+  extraConfig: |
+    {
+      "log_level": "TRACE"
+    }
+
+connectInject:
+  transparentProxy:
+    defaultEnabled: true
+  enabled: true
+  default: true
+  apiGateway:
+    managedGatewayClass:
+      serviceType: LoadBalancer
+  cni:
+    enabled: true
+
+ui:
+  enabled: true
+  service:
+    type: LoadBalancer

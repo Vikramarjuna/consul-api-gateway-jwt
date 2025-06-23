@@ -1,0 +1,16 @@
+# 03-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake-jwt-server
+  namespace: jwt-dev
+  labels:
+    app: fake-jwt-server
+spec:
+  selector:
+    app: fake-jwt-server
+  ports:
+    - protocol: TCP
+      port: 8008
+      targetPort: 8008
+  type: ClusterIP # We only need internal cluster access, no external IP needed

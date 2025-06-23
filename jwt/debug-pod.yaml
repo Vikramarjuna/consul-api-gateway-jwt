@@ -1,0 +1,14 @@
+# debug-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: network-debug-pod
+  namespace: consul # IMPORTANT: This must be the same namespace as your api-gateway pod
+  annotations: # ADD THIS SECTION
+    "consul.hashicorp.com/connect-inject": "false"
+spec:
+  containers:
+  - name: debug-container
+    image: curlimages/curl:latest # A lightweight image with curl and nslookup
+    command: ["tail", "-f", "/dev/null"] # Keeps the container running
+  restartPolicy: Never

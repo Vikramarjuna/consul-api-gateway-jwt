@@ -1,0 +1,37 @@
+# 02-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-jwt-server
+  namespace: jwt-dev # Deploy into our dummy namespace
+  labels:
+    app: fake-jwt-server
+spec:
+  replicas: 1 # One replica is usually sufficient for a dummy provider
+  selector:
+    matchLabels:
+      app: fake-jwt-server
+  template:
+    metadata:
+      labels:
+        app: fake-jwt-server
+      annotations:
+        # Enable Consul Connect injection for this pod
+        "consul.hashicorp.com/connect-inject": "false"
+       # "consul.hashicorp.com/connect-service": "fake-jwt-sa"
+    spec:
+      serviceAccountName: fake-jwt-sa # ADD THIS LINE
+      containers:
+      - name: fake-jwt-server
+        image: ghcr.io/stackitcloud/fake-jwt-server:v0.1.1 # Or latest
+        ports:
+        - containerPort: 8008 # Default port for this server
+        env:
+        - name: ISSUER
+          value: "http://fake-jwt-server.jwt-dev.svc.cluster.local:8008" # Crucial: The actual issuer URL
+        - name: AUDIENCE
+          value: "your-api-audience" # Match this with your JWTProvider aud claim (or leave blank if not validating)
+        # - name: SUBJECT
+        #   value: "test-user"
+        # - name: EXPIRES_IN_MINUTES
+        #   value: "60" # Tokens valid for 60 minutes

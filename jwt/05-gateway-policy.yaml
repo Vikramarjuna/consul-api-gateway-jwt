@@ -1,0 +1,20 @@
+# 05-gateway-policy.yaml (example)
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: GatewayPolicy
+metadata:
+  name: jwt-policy-for-my-gateway
+  namespace: consul # Same namespace as your Gateway
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: api-gateway # Your Consul API Gateway Gateway resource name
+  default:
+    jwt:
+      providers:
+        - name: my-dummy-jwt-provider.default # Reference the JWTProvider created in Step 4
+          verifyClaims: # Example: Ensure JWT has 'role: admin'
+            - path: ["role"]
+              value: "admin"
+            - path: ["aud"] # Verify the audience claim
+              value: "your-api-audience" # Must match the AUDIENCE env var in dummy server deployment

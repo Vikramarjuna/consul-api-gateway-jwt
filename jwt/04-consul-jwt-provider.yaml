@@ -1,0 +1,14 @@
+# 04-consul-jwt-provider.yaml
+apiVersion:   consul.hashicorp.com/v1alpha1
+kind: JWTProvider
+metadata:
+  name: my-dummy-jwt-provider
+  # Ensure this namespace matches where your HTTPRoute and RouteAuthFilter are deployed
+  # Based on your HTTPRoute, this should be 'default'
+  namespace: default
+spec:
+  # The issuer (iss claim) must match exactly what your dummy JWT provider sets
+  issuer: "http://172.20.24.100:8008"
+  jsonWebKeySet:
+    remote: # Use 'remote' for fetching from a URI
+      uri: "http://172.20.24.100:8008/.well-known/jwks.json"
