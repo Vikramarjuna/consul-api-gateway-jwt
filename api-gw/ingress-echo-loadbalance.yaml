@@ -35,12 +35,12 @@ spec:
     - path:
         type: PathPrefix
         value: /echo
-    filters:
-      - type: ExtensionRef
-        extensionRef:
-          group: consul.hashicorp.com
-          kind: RouteAuthFilter
-          name: auth-filter
+    #filters:
+    #  - type: ExtensionRef
+    #    extensionRef:
+    #      group: consul.hashicorp.com
+    #      kind: RouteAuthFilter
+    #      name: auth-filter
     backendRefs:
     - kind: Service
       name: echo-1

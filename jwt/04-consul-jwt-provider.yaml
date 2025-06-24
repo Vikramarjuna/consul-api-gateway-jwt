@@ -8,7 +8,7 @@ metadata:
   namespace: default
 spec:
   # The issuer (iss claim) must match exactly what your dummy JWT provider sets
-  issuer: "http://172.20.24.100:8008"
+  issuer: "https://my-local-issuer.example.com"
   jsonWebKeySet:
     remote: # Use 'remote' for fetching from a URI
       uri: "http://172.20.24.100:8008/.well-known/jwks.json"
