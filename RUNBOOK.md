@@ -23,7 +23,7 @@ kubectl create namespace consul
 # Setup Consul License
 # Create a license file named `consul.hclic` in the root of this repository.
 secret=$(cat consul.hclic)
-kubectl create secret generic consul-ent-license --from-literal="key=${secret}"
+kubectl create secret generic consul-ent-license --from-literal="key=${secret}" -n consul
 
 # Install Consul on Kubernetes
 consul-k8s install -config-file=consul/values.yaml
